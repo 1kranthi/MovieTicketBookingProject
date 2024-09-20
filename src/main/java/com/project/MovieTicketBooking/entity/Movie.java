@@ -1,14 +1,8 @@
 package com.project.MovieTicketBooking.entity;
 
 import java.util.List;
-
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import java.time.LocalDate;
-
 import java.util.ArrayList;
 
 @Entity
@@ -28,6 +22,9 @@ public class Movie {
 
     @ElementCollection
     private List<String> showtimes=new ArrayList<>();
+
+    public Movie() {
+    }
 
     public String getDescription() {
         return description;

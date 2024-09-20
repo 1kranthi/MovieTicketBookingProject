@@ -1,10 +1,7 @@
 package com.project.MovieTicketBooking.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 
 // marks the class as a JPA entity to be mapped to a database table.
 @Entity
@@ -18,8 +15,10 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    private String email;
+    private String email;    
 
+    public User() {
+    }
 
     //Getters and Setters
     public Long getId(){

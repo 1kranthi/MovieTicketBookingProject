@@ -1,12 +1,7 @@
 package com.project.MovieTicketBooking.entity;
 
 import java.time.LocalDateTime;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Showtime {
@@ -22,8 +17,9 @@ public class Showtime {
     private Movie movie;
 
     private String screen;
-    private Integer availableSeats;
 
+    public Showtime() {
+    }
 
     public Long getId() {
         return id;
@@ -55,12 +51,5 @@ public class Showtime {
     public void setScreen(String screen) {
         this.screen = screen;
     }
-    public Integer getAvailableSeats() {
-        return availableSeats;
-    }
-    public void setAvailableSeats(Integer availableSeats) {
-        this.availableSeats = availableSeats;
-    }
     
-
 }
