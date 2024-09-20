@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.project.MovieTicketBooking.entity.Seat;
 import com.project.MovieTicketBooking.repository.SeatRepository;
 import com.project.MovieTicketBooking.service.SeatService;
 
+@Service
 public class SeatServiceImpl implements SeatService {
     
     @Autowired

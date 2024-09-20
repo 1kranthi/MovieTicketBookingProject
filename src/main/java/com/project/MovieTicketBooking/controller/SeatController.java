@@ -31,7 +31,7 @@ public class SeatController {
     }
 
     //to get seat by id
-    @GetMapping("/{id}")
+    @GetMapping
     public ResponseEntity<List<Seat>> getAllSeats(){
         List<Seat> seats=seatService.getAllSeats();
         return ResponseEntity.ok(seats);
@@ -53,7 +53,7 @@ public class SeatController {
 
     //delete seat by id
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSeat(Long id){
+    public ResponseEntity<Void> deleteSeat(@PathVariable Long id){
         seatService.deleteSeat(id);
         return ResponseEntity.noContent().build();
     }
