@@ -1,5 +1,6 @@
+import React from 'react';
 import UserList from './components/UserList';
-import {fetchUsers} from './services/userServices';
+import MovieList from './components/MovieList';
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <header className="App-header">
         <h1>Welcome to the Movie Ticket Booking webpage</h1>
         <UserList/>
+        <MovieList/>
       </header>
     </div>
   );

@@ -21,8 +21,12 @@ public class MovieServiceImpl implements MovieService{
     }
 
     @Override
-    public Movie getMovieById(Long id){
-        return movieRepository.findById(id).orElse(null);
+    public Movie getMovieByTitle(String title){
+       Movie movie=movieRepository.findByTitle(title);
+       if(movie==null){
+        throw new RuntimeException("Movie not found");
+       }
+       return movie;
     }
 
     @Override
@@ -31,8 +35,8 @@ public class MovieServiceImpl implements MovieService{
     }
 
     @Override
-    public Movie updateMovie(Long id,Movie movie){
-        Movie exisitingMovie=movieRepository.findById(id).orElse(null);
+    public Movie updateMovie(String title,Movie movie){
+        Movie exisitingMovie=movieRepository.findByTitle(title);
         if(exisitingMovie !=null){
             exisitingMovie.setTitle(movie.getTitle());
             exisitingMovie.setGenre(movie.getGenre());
@@ -49,7 +53,12 @@ public class MovieServiceImpl implements MovieService{
     }
 
     @Override
-    public void deleteMovie(Long id){
-        movieRepository.deleteById(id);
+    public void deleteByTitle(String title){
+        Movie movie = movieRepository.findByTitle(title);
+        if(movie !=null){
+            movieRepository.delete(movie);
+        }else{
+            throw new RuntimeException("Movie not found for deletion");
+        }
     }
 }

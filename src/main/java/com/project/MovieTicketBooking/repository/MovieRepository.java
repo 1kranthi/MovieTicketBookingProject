@@ -8,5 +8,6 @@ import com.project.MovieTicketBooking.entity.Movie;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie,Long> {
-    
+    Movie findByTitle(String title);
+    void deleteByTitle(String title);
 }

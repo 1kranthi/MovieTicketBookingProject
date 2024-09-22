@@ -6,8 +6,8 @@ import com.project.MovieTicketBooking.entity.Movie;
 
 public interface MovieService {
     List<Movie> getAllMovies();
-    Movie getMovieById(Long id);
+    Movie getMovieByTitle(String title);
     Movie addMovie(Movie movie);
-    Movie updateMovie(Long Id,Movie movie);
-    void deleteMovie(Long id);
+    Movie updateMovie(String title,Movie movie);
+    void deleteByTitle(String title);
 }
