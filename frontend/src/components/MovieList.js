@@ -100,6 +100,7 @@ const MovieList = () => {
               <strong>Description:</strong> {movie.description} <br />
               <strong>Rating:</strong> {movie.rating} <br />
               <strong>Price:</strong> ₹{movie.price} <br />
+              <strong>Showtimes:</strong>{movie.showtimes}<br/>
               <button onClick={() => handleDelete(movie.title)}>Delete</button>
               <hr />
              
@@ -172,6 +173,13 @@ const MovieList = () => {
           name="description"
           placeholder="Description"
           value={formData.description}
+          onChange={handleInputChange}
+        />
+         <input
+          type="text"
+          name="showtimes"
+          placeholder="Showtimes (comma separated)"
+          value={formData.showtimes}
           onChange={handleInputChange}
         />
         <button type="submit">Add Movie</button>
