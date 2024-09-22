@@ -7,7 +7,7 @@ import com.project.MovieTicketBooking.entity.Booking;
 import com.project.MovieTicketBooking.service.BookingService;
 
 @RestController
-@RequestMapping("/bookings")
+@RequestMapping("/api/bookings")
 public class BookingController {
     
     @Autowired

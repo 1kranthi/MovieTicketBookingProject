@@ -8,9 +8,11 @@ import com.project.MovieTicketBooking.entity.User;
 import com.project.MovieTicketBooking.service.UserService;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     
+
     private final UserService userService;
 
     @Autowired
