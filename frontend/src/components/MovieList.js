@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getAllMovies, addMovie, deleteByTitle ,getMovieByTitle} from "../services/MovieServices";
+import {
+  getAllMovies,
+  addMovie,
+  deleteByTitle,
+  getMovieByTitle,
+} from "../services/MovieServices";
 
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
@@ -15,8 +20,8 @@ const MovieList = () => {
     showtimes: "",
   });
 
-  const [searchTitle,setSearchTitle]= useState("");
-  const [message,setMessage]=useState("");
+  const [searchTitle, setSearchTitle] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     fetchMovies();
@@ -27,15 +32,15 @@ const MovieList = () => {
     setMovies(data);
   };
 
-  const fetchMoviesByTitle = async (e) =>  {
-     e.preventDefault();
-     const data= await getMovieByTitle(searchTitle);
-     if(data){
-        setMovies([data]);
-     }else{
-        setMovies([]);
-     }
-     setSearchTitle("");
+  const fetchMoviesByTitle = async (e) => {
+    e.preventDefault();
+    const data = await getMovieByTitle(searchTitle);
+    if (data) {
+      setMovies([data]);
+    } else {
+      setMovies([]);
+    }
+    setSearchTitle("");
   };
 
   const handleInputChange = (e) => {
@@ -75,21 +80,29 @@ const MovieList = () => {
       {message && <div className="success-message"> {message}</div>}
       <form onSubmit={fetchMoviesByTitle}>
         <input
-         type="text"
-         value={searchTitle}
-         onChange={(e) => setSearchTitle(e.target.value)}
-         placeholder="Search by title"
+          type="text"
+          value={searchTitle}
+          onChange={(e) => setSearchTitle(e.target.value)}
+          placeholder="Search by title"
         />
         <button type="submit">Search</button>
       </form>
-       
+
       <ul>
         {movies.length > 0 ? (
           movies.map((movie) => (
             <li key={movie.title}>
-              {movie.title} - {movie.genre} ({movie.duration} min) -{" "}
-              {movie.language}
+              <strong>Title:</strong> {movie.title} <br />
+              <strong>Genre:</strong> {movie.genre} <br />
+              <strong>Duration:</strong> {movie.duration} min <br />
+              <strong>Release Date:</strong> {movie.releaseDate} <br />
+              <strong>Language:</strong> {movie.language} <br />
+              <strong>Description:</strong> {movie.description} <br />
+              <strong>Rating:</strong> {movie.rating} <br />
+              <strong>Price:</strong> ₹{movie.price} <br />
               <button onClick={() => handleDelete(movie.title)}>Delete</button>
+              <hr />
+             
             </li>
           ))
         ) : (
@@ -103,7 +116,7 @@ const MovieList = () => {
         <input
           type="text"
           name="title"
-          placeholder="Title"   
+          placeholder="Title"
           value={formData.title}
           onChange={handleInputChange}
         />
@@ -156,9 +169,9 @@ const MovieList = () => {
         />
         <input
           type="text"
-          name="showtimes"
-          placeholder="Showtimes (comma separated)"
-          value={formData.showtimes}
+          name="description"
+          placeholder="Description"
+          value={formData.description}
           onChange={handleInputChange}
         />
         <button type="submit">Add Movie</button>
