@@ -27,20 +27,13 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<?> createUser(@RequestBody User user){
+        //check if the username is already exits
+        if(userService.getUserByUsername(user.getUsername()) !=null){
+            return ResponseEntity.badRequest().body("Username already exits. Please choose a different username");
+        }
         User savedUser=userService.saveUser(user);
         return ResponseEntity.ok(savedUser);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id){
-        User user=userService.getUserById(id);
-        if(user!=null){
-            return ResponseEntity.ok(user);
-        }
-        else{
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @GetMapping("/username/{username}")

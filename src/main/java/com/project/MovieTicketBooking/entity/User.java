@@ -13,6 +13,8 @@ public class User {
     //configures automatic generation of the primary key values.
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
     private String username;
     private String password;
     private String email;    
