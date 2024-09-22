@@ -18,7 +18,12 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public Seat createseat(Seat seat){
-        return seatRepository.save(seat);
+    // Check for existing seat with the same seat number
+    Optional<Seat> existingSeat = seatRepository.findBySeatNumber(seat.getSeatNumber());
+    if (existingSeat.isPresent()) {
+        throw new RuntimeException("Seat number already exists.");
+    }
+    return seatRepository.save(seat);
     }
 
     @Override
