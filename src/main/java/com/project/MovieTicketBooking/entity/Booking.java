@@ -14,9 +14,6 @@ public class Booking {
     @ManyToOne
     private User user;
 
-    @ManyToOne
-    private Showtime showtime;
-
     @ManyToMany
     private List<Seat> seats;
     private LocalDateTime bookingDate;
@@ -37,12 +34,7 @@ public class Booking {
     public void setUser(User user) {
         this.user = user;
     }
-    public Showtime getShowtime() {
-        return showtime;
-    }
-    public void setShowtime(Showtime showtime) {
-        this.showtime = showtime;
-    }
+   
     public List<Seat> getSeats() {
         return seats;
     }
