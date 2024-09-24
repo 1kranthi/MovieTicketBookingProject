@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.project.MovieTicketBooking.entity.Booking;
 import com.project.MovieTicketBooking.entity.Movie;
+import com.project.MovieTicketBooking.entity.Theater;
 import com.project.MovieTicketBooking.repository.BookingRepository;
 import com.project.MovieTicketBooking.repository.MovieRepository;
+import com.project.MovieTicketBooking.repository.TheaterRepository;
 import com.project.MovieTicketBooking.service.BookingService;
 
 @Service
@@ -21,11 +23,16 @@ public class BookingServiceImpl implements BookingService{
     @Autowired
     private MovieRepository movieRepository;
 
+    @Autowired
+    private TheaterRepository theaterRepository;
+
     @Override
-    public Booking createBookingByTitle(Booking booking,String movieTitle){
+    public Booking createBookingByTitle(Booking booking,String movieTitle,String theateName){
          Optional<Movie> movieOptional = movieRepository.findByTitle(movieTitle);
+        //  Optional<Theater> theaterOptional = theaterRepository.findByName(booking.getTheater().getId());
         if (movieOptional.isPresent()) {
             booking.setMovie(movieOptional.get());  
+            // booking.setTheater(theaterOptional.get());
             booking.setBookingStatus("pending");
             return bookingRepository.save(booking);
         } else {

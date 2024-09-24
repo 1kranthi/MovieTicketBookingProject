@@ -14,8 +14,8 @@ public class BookingController {
     private BookingService bookingService;
 
     @PostMapping
-    public Booking createBooking(@RequestBody Booking booking,@RequestParam String movieTitle){
-        return bookingService.createBookingByTitle(booking,movieTitle);
+    public Booking createBooking(@RequestBody Booking booking,@RequestParam String movieTitle,String theaterName){
+        return bookingService.createBookingByTitle(booking,movieTitle,theaterName);
     }
 
     @PostMapping("/{id}")
