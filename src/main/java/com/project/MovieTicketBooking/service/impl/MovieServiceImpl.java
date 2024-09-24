@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.Optional;
 import com.project.MovieTicketBooking.entity.Movie;
 import com.project.MovieTicketBooking.repository.MovieRepository;
 import com.project.MovieTicketBooking.service.MovieService;
@@ -22,11 +22,8 @@ public class MovieServiceImpl implements MovieService{
 
     @Override
     public Movie getMovieByTitle(String title){
-       Movie movie=movieRepository.findByTitle(title);
-       if(movie==null){
-        throw new RuntimeException("Movie not found");
-       }
-       return movie;
+        return movieRepository.findByTitle(title)
+        .orElseThrow(() -> new RuntimeException("Movie not found"));
     }
 
     @Override
@@ -36,8 +33,9 @@ public class MovieServiceImpl implements MovieService{
 
     @Override
     public Movie updateMovie(String title,Movie movie){
-        Movie exisitingMovie=movieRepository.findByTitle(title);
-        if(exisitingMovie !=null){
+        Optional<Movie> exisitingMovieOptional=movieRepository.findByTitle(title);
+        if(exisitingMovieOptional.isPresent()){
+            Movie exisitingMovie=exisitingMovieOptional.get();
             exisitingMovie.setTitle(movie.getTitle());
             exisitingMovie.setGenre(movie.getGenre());
             exisitingMovie.setDuration(movie.getDuration());
@@ -54,9 +52,9 @@ public class MovieServiceImpl implements MovieService{
 
     @Override
     public void deleteByTitle(String title){
-        Movie movie = movieRepository.findByTitle(title);
-        if(movie !=null){
-            movieRepository.delete(movie);
+        Optional<Movie> movie = movieRepository.findByTitle(title);
+        if(movie.isPresent()){
+            movieRepository.delete(movie.get());
         }else{
             throw new RuntimeException("Movie not found for deletion");
         }

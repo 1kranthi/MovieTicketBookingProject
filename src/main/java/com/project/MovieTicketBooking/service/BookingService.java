@@ -6,8 +6,8 @@ import com.project.MovieTicketBooking.entity.Booking;
 
 public interface BookingService {
     
-    Booking createBooking(Booking booking);
-    Booking updateBooking(Long id,Booking booking);
+    Booking createBookingByTitle(Booking booking,String movieTitle);
+    Booking updateBookingByTitle(Long id,Booking booking,String movieTitle);
     void cancelBooking(Long id);
     Booking getBookingById(Long id);
     List<Booking> getAllBookings();
