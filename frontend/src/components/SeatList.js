@@ -11,6 +11,7 @@ const SeatList = () => {
         loadSeats();
     }, []);
 
+    
     const loadSeats = async () => {
         const response = await SeatService.getAllSeats();
         setSeats(response.data);

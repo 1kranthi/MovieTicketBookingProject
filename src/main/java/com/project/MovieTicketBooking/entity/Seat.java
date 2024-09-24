@@ -1,6 +1,9 @@
 package com.project.MovieTicketBooking.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Seat {
@@ -14,13 +17,21 @@ public class Seat {
    
     public Seat() {
     }
-    
-    public Seat(Long id, String seatNumber, String seatType, Boolean availability) {
-        Id = id;
+
+    public Seat(Long Id, Boolean availability, String seatNumber, String seatType) {
+        this.Id = Id;
+        this.availability = availability;
         this.seatNumber = seatNumber;
         this.seatType = seatType;
-        this.availability = availability;
     }
+
+    public Seat(Boolean availability, String seatNumber, String seatType) {
+        this.availability = availability;
+        this.seatNumber = seatNumber;
+        this.seatType = seatType;
+    }
+    
+   
 
     public Long getId() {
         return Id;
