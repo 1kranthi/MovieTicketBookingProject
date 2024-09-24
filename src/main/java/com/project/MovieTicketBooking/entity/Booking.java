@@ -17,6 +17,9 @@ public class Booking {
     @ManyToOne 
     private Movie movie;
 
+    @ManyToOne
+    private Theater theater;
+
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Seat> seats;
     private LocalDateTime bookingDate;
@@ -65,5 +68,12 @@ public class Booking {
         this.movie = movie;
     }
 
-    
+    public Theater getTheater() {
+        return theater;
+    }
+
+    public void setTheater(Theater theater) {
+        this.theater = theater;
+    }
+
 }
