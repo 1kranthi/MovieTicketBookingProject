@@ -14,6 +14,13 @@ public class Seat {
    
     public Seat() {
     }
+    
+    public Seat(Long id, String seatNumber, String seatType, Boolean availability) {
+        Id = id;
+        this.seatNumber = seatNumber;
+        this.seatType = seatType;
+        this.availability = availability;
+    }
 
     public Long getId() {
         return Id;

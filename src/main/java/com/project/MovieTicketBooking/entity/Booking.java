@@ -14,7 +14,10 @@ public class Booking {
     @ManyToOne
     private User user;
 
-    @ManyToMany
+    @ManyToOne 
+    private Movie movie;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Seat> seats;
     private LocalDateTime bookingDate;
     private String bookingStatus;
@@ -52,6 +55,14 @@ public class Booking {
     }
     public void setBookingStatus(String bookingStatus) {
         this.bookingStatus = bookingStatus;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 
     

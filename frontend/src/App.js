@@ -2,6 +2,8 @@ import React from 'react';
 import UserList from './components/UserList';
 import MovieList from './components/MovieList';
 import SeatList from './components/SeatList';
+import TheaterList from './components/TheaterList';
+import BookingList from './components/BookingList';
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
         <UserList/>
         <MovieList/>
         <SeatList/>
+        <TheaterList/>
+        <BookingList/>
       </header>
     </div>
   );

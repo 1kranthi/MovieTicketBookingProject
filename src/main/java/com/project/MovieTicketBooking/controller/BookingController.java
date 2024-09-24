@@ -14,22 +14,22 @@ public class BookingController {
     private BookingService bookingService;
 
     @PostMapping
-    public Booking createBooking(Booking booking){
-        return bookingService.createBooking(booking);
+    public Booking createBooking(@RequestBody Booking booking,@RequestParam String movieTitle){
+        return bookingService.createBookingByTitle(booking,movieTitle);
     }
 
     @PostMapping("/{id}")
-    public Booking updatebBooking(Long id,Booking bookingDetails){
-        return bookingService.updateBooking(id, bookingDetails);
+    public Booking updatebBooking(@PathVariable Long id,@RequestBody Booking bookingDetails,@RequestParam String movieTitle){
+        return bookingService.updateBookingByTitle(id, bookingDetails,movieTitle);
     }
 
     @PutMapping("/cancle/{id}")
-    public void cancelBooking(Long id){
+    public void cancelBooking(@PathVariable Long id){
         bookingService.cancelBooking(id);
     }
 
     @GetMapping("/{id}")
-    public Booking getBookingById(Long id){
+    public Booking getBookingById(@PathVariable Long id){
         return bookingService.getBookingById(id);
     }
 
