@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.project.MovieTicketBooking.entity.Booking;
+// import com.project.MovieTicketBooking.entity.Seat;
 import com.project.MovieTicketBooking.service.BookingService;
 
 @RestController
@@ -14,13 +15,13 @@ public class BookingController {
     private BookingService bookingService;
 
     @PostMapping
-    public Booking createBooking(@RequestBody Booking booking,@RequestParam String movieTitle,String theaterName){
-        return bookingService.createBookingByTitle(booking,movieTitle,theaterName);
+    public Booking createBooking(@RequestBody Booking booking){
+        return bookingService.createBookingByTitle(booking.getSeats(),booking.getMovie().getTitle(),booking.getTheater().getName());
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public Booking updatebBooking(@PathVariable Long id,@RequestBody Booking bookingDetails,@RequestParam String movieTitle){
-        return bookingService.updateBookingByTitle(id, bookingDetails,movieTitle);
+        return bookingService.updateBooking(id, bookingDetails);
     }
 
     @PutMapping("/cancle/{id}")

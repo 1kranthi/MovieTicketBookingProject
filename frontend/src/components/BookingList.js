@@ -4,12 +4,11 @@ import BookingService from '../services/BookingServices';
 const BookingList = () => {
     const [bookings, setBookings] = useState([]);
     const [newBooking, setNewBooking] = useState({
-        movieTitle: '',
-        seats: [],
-        bookingStatus: 'pending'
+        movie: { title: '' },
+        theater: { name: '' },
+        seats: []
     });
-    const [selectedBooking, setSelectedBooking] = useState(null);
-    const [movieTitle, setMovieTitle] = useState('');
+    const [errorMessage, setErrorMessage] = useState("");  // Define error message state
 
     useEffect(() => {
         fetchAllBookings();
@@ -26,37 +25,40 @@ const BookingList = () => {
     };
 
     const handleSeatsChange = (event) => {
+        const seatsArray = event.target.value.split(',').map(seatNumber => ({
+            seatNumber: seatNumber.trim(),
+            availability: true  // Assuming all seats entered are available
+        }));
         setNewBooking(prevBooking => ({
             ...prevBooking,
-            seats: event.target.value.split(',')
+            seats: seatsArray
         }));
     };
 
     const createBooking = (event) => {
         event.preventDefault();
-        BookingService.createBooking(newBooking, movieTitle)
+
+        // Only send movie title, theater name, and seats
+        const payload = {
+            movie: { title: newBooking.movie.title },
+            theater: { name: newBooking.theater.name },
+            seats: newBooking.seats
+        };
+
+        BookingService.createBooking(payload)
             .then(() => {
                 fetchAllBookings();
                 setNewBooking({
-                    movieTitle: '',
-                    seats: [],
-                    bookingStatus: 'pending'
+                    movie: { title: '' },
+                    theater: { name: '' },
+                    seats: []
                 });
-                setMovieTitle('');
+                setErrorMessage(""); // Clear error message on success
             })
             .catch(error => {
+                // Set a generic error message for any runtime exceptions
+                setErrorMessage("Booking failed. Please enter valid details."); 
                 console.error("There was an error creating the booking!", error);
-            });
-    };
-
-    const updateBooking = (id) => {
-        BookingService.updateBookingByTitle(id, selectedBooking, selectedBooking.movieTitle)
-            .then(() => {
-                fetchAllBookings();
-                setSelectedBooking(null);
-            })
-            .catch(error => {
-                console.error("There was an error updating the booking!", error);
             });
     };
 
@@ -74,22 +76,42 @@ const BookingList = () => {
         <div>
             <h2><strong>Movie Bookings</strong></h2>
 
+            {/* Display Error Message */}
+            {errorMessage && <p className="error-message" style={{ color: 'red' }}>{errorMessage}</p>}
+
             {/* Create Booking Form */}
             <form onSubmit={createBooking}>
+                {/* Movie Information */}
                 <label><strong>Movie Title: </strong></label>
                 <input
                     type="text"
-                    value={movieTitle}
-                    onChange={(e) => setMovieTitle(e.target.value)}
+                    value={newBooking.movie.title}
+                    onChange={(e) => setNewBooking(prev => ({
+                        ...prev,
+                        movie: { ...prev.movie, title: e.target.value }
+                    }))}
                     required
                 />
                 <br />
 
+                {/* Theater Information */}
+                <label><strong>Theater: </strong></label>
+                <input
+                    type="text"
+                    value={newBooking.theater.name}
+                    onChange={(e) => setNewBooking(prev => ({
+                        ...prev,
+                        theater: { ...prev.theater, name: e.target.value }
+                    }))}
+                    required
+                />
+                <br />
+
+                {/* Seats */}
                 <label><strong>Seats (comma-separated): </strong></label>
                 <input
                     type="text"
-                    name="seats"
-                    value={newBooking.seats.join(',')}
+                    value={newBooking.seats.map(seat => seat.seatNumber).join(',')}
                     onChange={handleSeatsChange}
                     required
                 />
@@ -107,73 +129,31 @@ const BookingList = () => {
                     <tr>
                         <th>Booking ID</th>
                         <th>Movie Title</th>
+                        <th>Theater</th>
                         <th>Seats</th>
-                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {bookings.map((booking) => (
-                        <tr key={booking.id}>
-                            <td>{booking.id}</td>
-                            <td>{booking.movie.title}</td>
-                            <td>{booking.seats.map(seat => seat.seatNumber).join(', ')}</td>
-                            <td>{booking.bookingStatus}</td>
-                            <td>
-                                <button onClick={() => cancelBooking(booking.id)}>Cancel</button>
-                                <button onClick={() => setSelectedBooking(booking)}>Update</button>
-                            </td>
+                    {bookings.length > 0 ? (
+                        bookings.map((booking) => (
+                            <tr key={booking.id}>
+                                <td>{booking.id}</td>
+                                <td>{booking.movie.title}</td>
+                                <td>{booking.theater.name}</td>
+                                <td>{booking.seats.map(seat => seat.seatNumber).join(', ')}</td>
+                                <td>
+                                    <button onClick={() => cancelBooking(booking.id)}>Cancel</button>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="5">No bookings available</td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
-
-            <br />
-
-            {/* Update Booking Form (if a booking is selected) */}
-            {selectedBooking && (
-                <div>
-                    <h3><strong>Update Booking</strong></h3>
-                    <form onSubmit={() => updateBooking(selectedBooking.id)}>
-                        <label><strong>Movie Title: </strong></label>
-                        <input
-                            type="text"
-                            name="movieTitle"
-                            value={selectedBooking.movie.title}
-                            disabled
-                        />
-                        <br />
-
-                        <label><strong>Seats (comma-separated): </strong></label>
-                        <input
-                            type="text"
-                            name="seats"
-                            value={selectedBooking.seats.map(seat => seat.seatNumber).join(',')}
-                            onChange={(e) => setSelectedBooking({
-                                ...selectedBooking,
-                                seats: e.target.value.split(',')
-                            })}
-                            required
-                        />
-                        <br />
-
-                        <label><strong>Status: </strong></label>
-                        <input
-                            type="text"
-                            name="bookingStatus"
-                            value={selectedBooking.bookingStatus}
-                            onChange={(e) => setSelectedBooking({
-                                ...selectedBooking,
-                                bookingStatus: e.target.value
-                            })}
-                            required
-                        />
-                        <br />
-
-                        <button type="submit">Update Booking</button>
-                    </form>
-                </div>
-            )}
         </div>
     );
 };

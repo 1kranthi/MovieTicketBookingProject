@@ -1,26 +1,22 @@
 import axios from 'axios';
 
-const APT_URL='/api/bookings';
+const API_URL = '/api/bookings';  // Adjust the base URL as per your backend
 
-class BookingService{
-    createBooking(booking,movieTitle){
-        return axios.post(`${APT_URL}?movieTitle=${movieTitle}`,booking);
+class BookingService {
+
+    // Create Booking with only movie title, theater name, and seats
+    createBooking(booking) {
+        return axios.post(API_URL, booking);
     }
 
-    updateBookingByTitle(id,booking,movieTitle){
-        return axios.post(`${APT_URL}/${id}?movieTitle=${movieTitle}`,booking);
+    // Cancel Booking by ID
+    cancelBooking(id) {
+        return axios.put(`${API_URL}/cancel/${id}`);
     }
 
-    cancleBooking(id){
-        return axios.put(`${APT_URL}/cancel/${id}`);
-    }
-
-    getBookingById(id){
-        return axios.get(`${APT_URL}/${id}`);
-    }
-
-    getAllBookings(){
-        return axios.get(APT_URL);
+    // Get all Bookings
+    getAllBookings() {
+        return axios.get(API_URL);
     }
 }
 

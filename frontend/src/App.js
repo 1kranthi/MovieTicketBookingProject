@@ -30,6 +30,12 @@ function App() {
                <Route path="user" element={<UserList/>}>
                   
                </Route>
+               <Route path="theater" element={<TheaterList/>}>
+                  
+               </Route>
+               <Route path="booking" element={<BookingList/>}>
+                  
+               </Route>
            </Routes>
       </BrowserRouter>
     </div>
