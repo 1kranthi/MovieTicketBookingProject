@@ -46,5 +46,24 @@ public class UserController {
         }
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
+    if (userService.getUserByUsername(user.getUsername()) != null) {
+        return ResponseEntity.badRequest().body("Username already exists. Please choose a different username.");
+    }
+    User registeredUser = userService.saveUser(user);
+    return ResponseEntity.ok(registeredUser);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody User user) {
+    User foundUser = userService.getUserByUsername(user.getUsername());
+    if (foundUser != null && foundUser.getPassword().equals(user.getPassword())) {
+        return ResponseEntity.ok(foundUser); // Return user details or a token if using JWT
+    } else {
+        return ResponseEntity.status(401).body("Invalid credentials");
+    }
+    }
+
    
 }

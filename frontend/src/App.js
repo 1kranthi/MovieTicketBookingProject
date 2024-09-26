@@ -6,6 +6,7 @@ import TheaterList from './components/TheaterList';
 import BookingList from './components/BookingList';
 import {BrowserRouter,Routes,Route} from 'react-router-dom'; 
 import Navbar from './components/Navbar';
+import RegistrationForm from './components/RegistrationForm';
 
 function App() {
   return (
@@ -36,6 +37,10 @@ function App() {
                <Route path="booking" element={<BookingList/>}>
                   
                </Route>
+               <Route path="register" element={<RegistrationForm/>}>
+                  
+               </Route>
+
            </Routes>
       </BrowserRouter>
     </div>
