@@ -13,7 +13,7 @@ public class Seat {
     private Long Id;
     private String seatNumber;
     private String seatType;
-    private Boolean availability;
+    private boolean availability;
    
     public Seat() {
     }

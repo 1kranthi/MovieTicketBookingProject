@@ -1,6 +1,6 @@
 package com.project.MovieTicketBooking.entity;
 
-import java.time.LocalDateTime;
+// import java.time.LocalDateTime;
 import java.util.List;
 import jakarta.persistence.*;
 
@@ -11,8 +11,8 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private User user;
+    // @ManyToOne
+    // private User user;
 
     @ManyToOne 
     private Movie movie;
@@ -20,10 +20,10 @@ public class Booking {
     @ManyToOne
     private Theater theater;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Seat> seats;
-    private LocalDateTime bookingDate;
-    private String bookingStatus;
+    // private LocalDateTime bookingDate;
+    // private String bookingStatus;
 
     public Booking() {
     }
@@ -34,12 +34,12 @@ public class Booking {
     public void setId(Long id) {
         this.id = id;
     }
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
+    // public User getUser() {
+    //     return user;
+    // }
+    // public void setUser(User user) {
+    //     this.user = user;
+    // }
    
     public List<Seat> getSeats() {
         return seats;
@@ -47,18 +47,18 @@ public class Booking {
     public void setSeats(List<Seat> seats) {
         this.seats = seats;
     }
-    public LocalDateTime getBookingDate() {
-        return bookingDate;
-    }
-    public void setBookingDate(LocalDateTime bookingDate) {
-        this.bookingDate = bookingDate;
-    }
-    public String getBookingStatus() {
-        return bookingStatus;
-    }
-    public void setBookingStatus(String bookingStatus) {
-        this.bookingStatus = bookingStatus;
-    }
+    // public LocalDateTime getBookingDate() {
+    //     return bookingDate;
+    // }
+    // public void setBookingDate(LocalDateTime bookingDate) {
+    //     this.bookingDate = bookingDate;
+    // }
+    // public String getBookingStatus() {
+    //     return bookingStatus;
+    // }
+    // public void setBookingStatus(String bookingStatus) {
+    //     this.bookingStatus = bookingStatus;
+    // }
 
     public Movie getMovie() {
         return movie;

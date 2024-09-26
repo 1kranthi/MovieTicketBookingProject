@@ -36,6 +36,16 @@ function Navbar() {
                   Movie
                 </Link>
               </li>
+              <li class="nav-item">
+                <Link class="nav-link" to="theater">
+                  Theater
+                </Link>
+              </li>
+              <li class="nav-item">
+                <Link class="nav-link" to="booking">
+                  Booking
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
