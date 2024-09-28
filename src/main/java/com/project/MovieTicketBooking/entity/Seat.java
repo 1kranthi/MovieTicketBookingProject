@@ -1,5 +1,7 @@
 package com.project.MovieTicketBooking.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -11,7 +13,8 @@ public class Seat {
     private String seatNumber;
     private String seatType;
     private boolean availability;
-   
+    private boolean locked;
+    private LocalDateTime lockedAt;
     public Seat() {
     }
     
@@ -46,4 +49,21 @@ public class Seat {
     public void setAvailability(Boolean availability) {
         this.availability = availability;
     }
+
+    public boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public LocalDateTime getLockedAt() {
+        return lockedAt;
+    }
+
+    public void setLockedAt(LocalDateTime lockedAt) {
+        this.lockedAt = lockedAt;
+    }
+    
 }

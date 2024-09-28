@@ -1,5 +1,6 @@
 package com.project.MovieTicketBooking.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,27 +33,55 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
-    public Seat getSeatById(Long id){
-        Optional<Seat> seat=seatRepository.findById(id);
+    public Seat getSeatBySeatNumber(String seatNumber){
+        Optional<Seat> seat=seatRepository.findBySeatNumber(seatNumber);
         return seat.orElse(null);
     }
 
     @Override
-    public Seat updateSeat(Long id,Seat seatDetails){
-        Seat seat = seatRepository.findById(id).orElse(null);
-        if(seat != null){
+    public Seat updateSeat(String seatNumber,Seat seatDetails){
+        Optional<Seat> seatOpt= seatRepository.findBySeatNumber(seatNumber);
+        if(seatOpt.isPresent()){
+            Seat seat=seatOpt.get();
             seat.setSeatNumber(seatDetails.getSeatNumber());
             seat.setSeatType(seatDetails.getSeatType());
             seat.setAvailability(seat.getAvailability());
-            
             return seatRepository.save(seat);
         }
         return null;
     }
 
     @Override
-    public void deleteSeat(Long id){
-        seatRepository.deleteById(id);;
+    public void deleteSeat(String seatNumber){
+        Optional<Seat> seatOpt=seatRepository.findBySeatNumber(seatNumber);
+        seatOpt.ifPresent(seat->seatRepository.delete(seat));
+    }
+
+    @Override
+    public boolean lockSeat(String seatNumber){
+        Optional<Seat> seatOpt=seatRepository.findBySeatNumber(seatNumber);
+        if(seatOpt.isPresent()){
+            Seat seat=seatOpt.get();
+            if(seat.getAvailability() && !seat.getLocked()){
+                seat.setLocked(true);
+                seat.setLockedAt(LocalDateTime.now());
+                seatRepository.save(seat);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean unlockSeat(String seatNumber){
+        Optional<Seat> seatOpt=seatRepository.findBySeatNumber(seatNumber);
+        if(seatOpt.isPresent()){
+            Seat seat=seatOpt.get();
+            seat.setLocked(false);
+            seatRepository.save(seat);
+            return true;
+        }
+        return false;
     }
 
 }

@@ -5,7 +5,7 @@ const SeatList = () => {
     const [seats, setSeats] = useState([]);
     const [seat, setSeat] = useState({ seatNumber: '', seatType: '', availability: true });
     const [isUpdate, setIsUpdate] = useState(false);
-    const [errorMessage,serErrorMessage]=useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         loadSeats();
@@ -24,14 +24,14 @@ const SeatList = () => {
         e.preventDefault();
         try {
             if (isUpdate) {
-                await SeatService.updateSeat(seat.id, seat);
+                await SeatService.updateSeat(seat.seatNumber, seat);
             } else {
                 await SeatService.createSeat(seat);
             }
             loadSeats();
             resetForm();
         } catch (error) {
-            serErrorMessage("Seat is not available");
+            setErrorMessage("Seat is not available or already booked.");
         }
     };
 
@@ -40,14 +40,37 @@ const SeatList = () => {
         setIsUpdate(true);
     };
 
-    const handleDelete = async (id) => {
-        await SeatService.deleteSeat(id);
+    const handleDelete = async (seatNumber) => {
+        await SeatService.deleteSeat(seatNumber);
         loadSeats();
+    };
+
+    const handleLockSeat = async (seatNumber) => {
+        try {
+            await SeatService.lockSeat(seatNumber);
+            setSeats(prevSeats => prevSeats.map(seat => 
+                seat.seatNumber === seatNumber ? { ...seat, availability: false } : seat
+            ));
+        } catch (error) {
+            setErrorMessage('Unable to lock seat. It might be already locked.');
+        }
+    };
+
+    const handleUnlockSeat = async (seatNumber) => {
+        try {
+            await SeatService.unlockSeat(seatNumber);
+            setSeats(prevSeats => prevSeats.map(seat => 
+                seat.seatNumber === seatNumber ? { ...seat, availability: true } : seat
+            ));
+        } catch (error) {
+            setErrorMessage('Unable to unlock seat.');
+        }
     };
 
     const resetForm = () => {
         setSeat({ seatNumber: '', seatType: '', availability: true });
         setIsUpdate(false);
+        setErrorMessage('');
     };
 
     return (
@@ -82,12 +105,18 @@ const SeatList = () => {
                 <button type="submit">{isUpdate ? 'Update Seat' : 'Add Seat'}</button>
                 <button type="button" onClick={resetForm}>Reset</button>
             </form>
+
             <ul>
                 {seats.map(seat => (
-                    <li key={seat.id}>
+                    <li key={seat.seatNumber}>
                         {seat.seatNumber} - {seat.seatType} - {seat.availability ? 'Available' : 'Booked'}
+                        {seat.availability ? (
+                            <button onClick={() => handleLockSeat(seat.seatNumber)}>Lock Seat</button>
+                        ) : (
+                            <button onClick={() => handleUnlockSeat(seat.seatNumber)}>Unlock Seat</button>
+                        )}
                         <button onClick={() => handleEdit(seat)}>Edit</button>
-                        <button onClick={() => handleDelete(seat.id)}>Delete</button>
+                        <button onClick={() => handleDelete(seat.seatNumber)}>Delete</button>
                     </li>
                 ))}
             </ul>
