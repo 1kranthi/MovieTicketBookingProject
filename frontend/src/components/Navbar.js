@@ -51,6 +51,31 @@ function Navbar() {
                   Register User
                 </Link>
               </li>
+              {/* <li class="nav-item">
+                <Link class="nav-link" to="theaters">
+                  Movies List
+                </Link>
+              </li> */}
+              <li class="nav-item">
+                <Link class="nav-link" to="movielist">
+                  MovieList
+                </Link>
+              </li>
+              <li class="nav-item">
+                <Link class="nav-link" to="theaters">
+                  TheaterList
+                </Link>
+              </li>
+              <li class="nav-item">
+                <Link class="nav-link" to="seat">
+                  SeatList
+                </Link>
+              </li>
+              <li class="nav-item">
+                <Link class="nav-link" to="users">
+                  UserList
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

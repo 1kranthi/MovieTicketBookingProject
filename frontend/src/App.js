@@ -7,6 +7,10 @@ import BookingList from './components/BookingList';
 import {BrowserRouter,Routes,Route} from 'react-router-dom'; 
 import Navbar from './components/Navbar';
 import RegistrationForm from './components/RegistrationForm';
+import Theaters from './components/Theaters';
+import Movies from './components/Movies';
+import Seats from './components/Seats';
+import Users from './components/Users'
 
 function App() {
   return (
@@ -40,7 +44,21 @@ function App() {
                <Route path="register" element={<RegistrationForm/>}>
                   
                </Route>
-
+               {/* <Route path="theaters" element={<Theaters/>}>
+                  
+                </Route> */}
+                 <Route path="movielist" element={<Movies/>}>
+                  
+                  </Route>
+                <Route path="theaters" element={<Theaters/>}>
+                  
+                </Route>
+                <Route path="seat" element={<Seats/>}>
+                  
+                </Route>
+                <Route path="users" element={<Users/>}>
+                  
+                </Route>
            </Routes>
       </BrowserRouter>
     </div>

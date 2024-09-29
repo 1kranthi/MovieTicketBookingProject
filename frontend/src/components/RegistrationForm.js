@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { registerUser } from '../services/userServices';
 
-const RegistrationForm = ({ fetchUsers }) => {
+const RegistrationForm = () => {
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -19,7 +19,6 @@ const RegistrationForm = ({ fetchUsers }) => {
         try {
             await registerUser(formData);
             setFormData({ username: '', email: '', password: '' });
-            fetchUsers();
             setErrorMessage('');
             alert("Registration successful!");
         } catch (error) {

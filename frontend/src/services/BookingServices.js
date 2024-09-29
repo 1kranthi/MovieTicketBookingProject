@@ -20,4 +20,5 @@ class BookingService {
     }
 }
 
-export default new BookingService();
+const bookingServiceInstance = new BookingService();
+export default bookingServiceInstance;

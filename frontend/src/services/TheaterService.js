@@ -23,4 +23,5 @@ class TheaterService {
     }
 }
 
-export default new TheaterService();
+const theaterServiceInstance = new TheaterService();
+export default theaterServiceInstance;

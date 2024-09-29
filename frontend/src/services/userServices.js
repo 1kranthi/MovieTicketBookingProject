@@ -24,6 +24,17 @@ export const registerUser = async (userData) => {
     }
 };
 
+// New function for admin registration
+export const adminRegisterUser = async (userData) => {
+    try {
+        const response = await axios.post(`${API_URL}/admin/register`, userData);
+        return response.data;
+    } catch (error) {
+        console.error("Error registering admin:", error);
+        throw error;
+    }
+};
+
 // To login a user
 export const loginUser = async (userData) => {
     try {
